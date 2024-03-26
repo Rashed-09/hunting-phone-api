@@ -1,25 +1,29 @@
-const hunting = async (searchPhone) => {
+const hunting = async (searchPhone, all) => {
      const res = await fetch(`https://openapi.programming-hero.com/api/phones?search=${searchPhone}`);
      const data = await res.json();
      const phone = data.data;
-     displayPhone(phone)
+     displayPhone(phone,all)
 }
 
-const displayPhone = phoneDetais => {
+const displayPhone = (phoneDetais, all) => {
      const catches = document.getElementById('phone-container');
      catches.innerText = '';
 
      // button showing for condition
      const showAllButton = document.getElementById('show-all')
-     if(phoneDetais.length > 12){
+     if(phoneDetais.length > 6 && !all){
           showAllButton.classList.remove('hidden');
      }
      else{
           showAllButton.classList.add('hidden');
      }
 
+     
      // display only for showing
-     phoneDetais = phoneDetais.slice(0,6);
+     if(!all){
+          phoneDetais = phoneDetais.slice(0,6);
+     }
+     
 
      phoneDetais.forEach(phone => {
           const div = document.createElement('div');
@@ -46,11 +50,11 @@ const displayPhone = phoneDetais => {
 
 
 
-const searchTo = () => {
+const searchTo = (all) => {
      leading(true)
      const input = document.getElementById('searchText');
      const inputValue = input.value;
-     hunting(inputValue)
+     hunting(inputValue,all)
 
 }
 
@@ -63,4 +67,9 @@ const leading = (istrue) => {
      else{
           load.classList.add('hidden');
      }
+}
+
+// show all event handler 
+const showAll = () =>{
+     searchTo(true)
 }
