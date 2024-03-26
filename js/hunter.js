@@ -8,6 +8,19 @@ const hunting = async (searchPhone) => {
 const displayPhone = phoneDetais => {
      const catches = document.getElementById('phone-container');
      catches.innerText = '';
+
+     // button showing for condition
+     const showAllButton = document.getElementById('show-all')
+     if(phoneDetais.length > 12){
+          showAllButton.classList.remove('hidden');
+     }
+     else{
+          showAllButton.classList.add('hidden');
+     }
+
+     // display only for showing
+     phoneDetais = phoneDetais.slice(0,6);
+
      phoneDetais.forEach(phone => {
           const div = document.createElement('div');
           div.classList = `card m-6 bg-gray-100 shadow-xl`;
@@ -25,14 +38,29 @@ const displayPhone = phoneDetais => {
           </div>
           `;
           catches.appendChild(div);
+
+          // stop loading funciton 
+          leading(false);
      });
 }
 
 
 
 const searchTo = () => {
+     leading(true)
      const input = document.getElementById('searchText');
      const inputValue = input.value;
      hunting(inputValue)
 
+}
+
+// loading function 
+const leading = (istrue) => {
+     const load = document.getElementById('loading');
+     if(istrue){
+          load.classList.remove('hidden');
+     }
+     else{
+          load.classList.add('hidden');
+     }
 }
