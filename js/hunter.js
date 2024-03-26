@@ -37,7 +37,7 @@ const displayPhone = (phoneDetais, all) => {
                <h2 class="card-title">${phone.phone_name}</h2>
                <p>If a dog chews shoes whose shoes does he choose?</p>
                <div class="card-actions">
-                    <button class="btn btn-primary">Buy Now</button>;
+                    <button onclick="showDetails('${phone.slug}')" class="btn btn-primary">Show Details</button>;
                </div>
           </div>
           `;
@@ -48,7 +48,34 @@ const displayPhone = (phoneDetais, all) => {
      });
 }
 
+   /// show details 
+const showDetails = async(id) => {
+  const res = await fetch(`https://openapi.programming-hero.com/api/phone/${id}`)
+  const promij = await res.json();
+  console.log(promij)
+  showModalDetails(promij)
+}
 
+//    show modal details 
+const showModalDetails = (Id) => {
+     show_modal_details.showModal()
+     const ddiv = document.getElementById('modal-container');
+     ddiv.innerHTML = `
+          <img src="${Id.data.image}">
+          <h2 class="text-xl font-bold text-black">${Id.data.name}</h2>
+          <p class="pt-4 text-gray-400">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
+          <h3 class="text-gray-400 pt-3 text-xs"><span class="font-medium">Storage : </span>${Id.data.mainFeatures.storage}</h3>
+          <h3 class="text-gray-400 pt-3 text-xs"><span class="font-medium">DisplaySize : </span>${Id.data.mainFeatures.displaySize}</h3>
+          <h3 class="text-gray-400 pt-3 text-xs"><span class="font-medium">chipSet : </span>${Id.data.mainFeatures.chipSet}</h3>
+          <h3 class="text-gray-400 pt-3 text-xs"><span class="font-medium">Memory : </span>${Id.data.mainFeatures.memory}</h3>
+          <h3 class="text-gray-400 pt-3 text-xs"><span class="font-medium">Slug : </span>${Id.data.slug}</h3>
+          <h3 class="text-gray-400 pt-3 text-xs"><span class="font-medium">ReleaseDate : </span>${Id.data.releaseDate}</h3>
+          <h3 class="text-gray-400 pt-3 text-xs"><span class="font-medium">Brand : </span>${Id.data.brand}</h3>
+          <h3 class="text-gray-400 pt-3 text-xs"><span class="font-medium">GPS : </span>${Id.data.others.GPS}</h3>
+
+     `
+     
+}
 
 const searchTo = (all) => {
      leading(true)
